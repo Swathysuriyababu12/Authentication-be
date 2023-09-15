@@ -7,33 +7,36 @@ dotenv.config();
 
 
 const redisClient = () => {
-    console.log("redis",process.env.REDIS_SERVICE_NAME,process.env.REDIS_PORT);
+    console.log("redis", process.env.REDIS_SERVICE_NAME, process.env.REDIS_PORT);
     return redis.createClient({
-         host: process.env.REDIS_SERVICE_NAME,
-         port: process.env.REDIS_PORT,
-        
-      });
-  };
- 
-  const client = redisClient();
-  
-  client.on('error', (err) => {
-    console.error('Redis Error:', err);
-  });
-  
-  client.on('connect', () => {
-    console.log('Connected to Redis');
-  });
-  client.on('end', () => {
-    console.log('Redis connection ended');
-  })
-  
-  client.on('SIGQUIT', () => {
-    client.quit();
-  })
-  
 
-  
-  //Configure session middleware
-  
-  module.exports=client
+        host: "rediss://red-ck2397821fec73b0cmv0:Nelc9qMXhmbJDahgUXscVuvi6xrzx0Bt@singapore-redis.render.com",
+        port: 6379
+
+        // url:"rediss://red-ck2397821fec73b0cmv0:Nelc9qMXhmbJDahgUXscVuvi6xrzx0Bt@singapore-redis.render.com:6379"
+
+    });
+};
+
+const client = redisClient();
+
+client.on('error', (err) => {
+    console.error('Redis Error:', err);
+});
+
+client.on('connect', () => {
+    console.log('Connected to Redis');
+});
+client.on('end', () => {
+    console.log('Redis connection ended');
+})
+
+client.on('SIGQUIT', () => {
+    client.quit();
+})
+
+
+
+//Configure session middleware
+
+module.exports = client
