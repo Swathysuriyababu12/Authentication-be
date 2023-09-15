@@ -11,7 +11,7 @@ client.connect().then(() => {
   }).catch((err) => {
     console.log(err.message);
   })
-  console.log(client)
+//   console.log(client)
 
 
   router.use(session({

@@ -33,7 +33,7 @@ router.post("/", async function (req, res, next) {
       res.status(200).send(false);
     } else {
       const sess = await req.session;
-      console.log(sess)
+      // console.log(sess)
       sess.username = email
       console.log(sess.username)
       res.status(200).send(loginCredentials);
