@@ -2,7 +2,7 @@ const redis = require('redis');
 
 const redisClient = () => {
     return redis.createClient({
-      host: 'redis://red-ck1umpfhdsdc738g8gp0', // Use IPv4 loopback address
+      host: 'red-ck1umpfhdsdc738g8gp0', // Use IPv4 loopback address
       port: 6379,
     });
   };
