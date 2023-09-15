@@ -1,17 +1,14 @@
 const redis = require('redis');
-const Redis = require('ioredis');
-
+const dotenv = require("dotenv");
+dotenv.config();
 // Internal Redis URL, extract the details into environment variables.
 // "redis://red-xxxxxxxxxxxxxxxxxxxx:6379"
 
-const renderRedis = new Redis({
-  host: process.env.REDIS_SERVICE_NAME, // Render Redis service name, red-xxxxxxxxxxxxxxxxxxxx
-  port: process.env.REDIS_PORT || 6379, // Redis port
-});
+
 
 const redisClient = () => {
     return redis.createClient({
-      host: 'red-ck1umpfhdsdc738g8gp0', // Use IPv4 loopback address
+      host: 'redis://red-ck1umpfhdsdc738g8gp0', // Use IPv4 loopback address
       port: 6379,
     });
   };
@@ -37,4 +34,4 @@ const redisClient = () => {
   
   //Configure session middleware
   
-  module.exports={client,renderRedis}
+  module.exports=client

@@ -3,17 +3,17 @@ var router = express.Router();
 const session = require('express-session');
 const RedisStore = require("connect-redis").default
 const { AuthenticateUser } = require("../Controller/login");
-const {client,renderRedis}=require("../redis");
+const client=require("../redis");
 
-// client.connect().then(() => {
-//   console.log('Connected to Redis');
-// }).catch((err) => {
-//   console.log(err.message);
-// })
+client.connect().then(() => {
+  console.log('Connected to Redis');
+}).catch((err) => {
+  console.log(err.message);
+})
 
 router.use(session({
-  // store: new RedisStore({ client: client }),
-  store:new RedisStore({ client: renderRedis}),
+  store: new RedisStore({ client: client }),
+  // store:new RedisStore({ client: renderRedis}),
   secret: 'secret$%^134',
   resave: false,
   saveUninitialized: false,
