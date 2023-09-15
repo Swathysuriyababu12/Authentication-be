@@ -11,7 +11,9 @@ client.connect().then(() => {
   }).catch((err) => {
     console.log(err.message);
   })
-  
+  console.log(client)
+
+
   router.use(session({
     store: new RedisStore({ client: client }),
     secret: 'secret$%^134',
