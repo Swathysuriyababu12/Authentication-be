@@ -8,8 +8,9 @@ dotenv.config();
 
 const redisClient = () => {
     return redis.createClient({
-        host: 'red-ck1umpfhdsdc738g8gp0', // Use IPv4 loopback address
-        port: 6379,
+         host: process.env.REDIS_SERVICE_NAME,
+         port: process.env.REDIS_PORT,
+        
       });
   };
  
