@@ -5,7 +5,6 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -24,8 +23,11 @@ const userSchema = mongoose.Schema(
       time: Date,
       otp: String,
     },
+    token: {
+      type: String,
+    },
   },
   { collection: "User" }
 );
 
-module.exports = mongoose.model("User", userSchema); 
+module.exports = mongoose.model("User", userSchema);

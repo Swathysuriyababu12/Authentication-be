@@ -6,10 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const config = require('../config/api.js');
-
-
-
+const config = require("../config/api.js");
 
 async function InsertSignUpUser(token) {
   try {
@@ -32,11 +29,7 @@ async function InsertSignUpUser(token) {
   <p>Regards,</p>
   <p>App</p>
   `;
-      sendMail(
-        newUser.email,
-        " Registration Successful",
-        content
-      );
+      sendMail(newUser.email, " Registration Successful", content);
       return `
       <html>
         <head>
@@ -83,8 +76,8 @@ async function InsertVerifyUser(name, email, password) {
       password: hashedPassword,
       token: token,
     });
-    const activationLink = `https://authentication-be-3erc.onrender.com/signin/${token}`;
-    console.log(activationLink)
+    const activationLink = `http://localhost:4000/signin/${token}`;
+    console.log(activationLink);
     const content = `
         <h4>Hi there,</h4>
         <h5>Welcome to the App</h5>
