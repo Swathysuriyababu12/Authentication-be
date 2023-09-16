@@ -37,6 +37,8 @@ router.post("/", async function (req, res, next) {
     console.log(loginCredentials);
     if (loginCredentials === "Invalid User name or Password") {
       res.status(200).send("Invalid User name or Password");
+    } else if (loginCredentials === "Server Busy") {
+      res.status(200).send("Server Busy");
     } else {
       const sess = await req.session;
       console.log(sess);
