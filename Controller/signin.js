@@ -76,7 +76,7 @@ async function InsertVerifyUser(name, email, password) {
       password: hashedPassword,
       token: token,
     });
-    const activationLink = `http://localhost:4000/signin/${token}`;
+    const activationLink = `https://authentication-bee.onrender.com/signin/${token}`;
     console.log(activationLink);
     const content = `
         <h4>Hi there,</h4>
