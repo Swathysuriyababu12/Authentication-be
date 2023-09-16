@@ -7,8 +7,6 @@ dotenv.config();
 const redisClient = () => {
   console.log("redis", process.env.REDIS_SERVICE_NAME, process.env.REDIS_PORT);
   return redis.createClient({
-    // host: "rediss://red-ck2397821fec73b0cmv0:Nelc9qMXhmbJDahgUXscVuvi6xrzx0Bt@singapore-redis.render.com",
-    // port: 6379,
     url: process.env.REDIS_URL,
   });
 };

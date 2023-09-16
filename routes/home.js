@@ -17,27 +17,27 @@ client
   });
 //   console.log(client)
 
-router.use(
-  session({
-    store: new RedisStore({ client: client }),
-    secret: "secret$%^134",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false, // if true only transmit cookie over https
-      httpOnly: false, // if true prevent client side JS from reading the cookie
-      sameSite: "none",
-      maxAge: 1000 * 60 * 10, // session max age in miliseconds
-    },
-  })
-);
+// router.use(
+//   session({
+//     store: new RedisStore({ client: client }),
+//     secret: "secret$%^134",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: false, // if true only transmit cookie over https
+//       httpOnly: false, // if true prevent client side JS from reading the cookie
+//       sameSite: "none",
+//       maxAge: 1000 * 60 * 10, // session max age in miliseconds
+//     },
+//   })
+// );
 
 router.get("/getDetails", async (req, res) => {
   try {
-    const sess = await req.session;
-    console.log(sess.username);
-    if (sess.username) {
-      res.status(200).send(sess.username);
+    const sess = await client.get("key");
+    console.log(sess);
+    if (sess) {
+      res.status(200).send(sess);
     } else {
       res.send("session expired");
     }
@@ -47,19 +47,34 @@ router.get("/getDetails", async (req, res) => {
 });
 
 router.get("/check", async function (req, res, next) {
-  const auth_token = await req.headers.authorization;
-  console.log(auth_token);
-  try {
-    var loginCredentials = await AuthorizeUser(auth_token);
-    if (loginCredentials === false) {
-      res.status(200).send("Invalid token");
-    } else {
-      console.log(loginCredentials);
-      res.json(loginCredentials);
+  const auth = await client.get("key");
+  if (auth) {
+    try {
+      var loginCredentials = await AuthorizeUser(auth);
+      if (loginCredentials === false) {
+        res.status(200).send("Invalid token");
+      } else {
+        console.log(loginCredentials);
+        res.json(loginCredentials);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Server Busy");
     }
-  } catch (error) {
-    console.log(error);
-    res.status(400).send("Server Busy");
+  } else {
+    const auth_token = await req.headers.authorization;
+    try {
+      var loginCredentials = await AuthorizeUser(auth_token);
+      if (loginCredentials === false) {
+        res.status(200).send("Invalid token");
+      } else {
+        console.log(loginCredentials);
+        res.json(loginCredentials);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send("Server Busy");
+    }
   }
 });
 

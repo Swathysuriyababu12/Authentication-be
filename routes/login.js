@@ -14,21 +14,6 @@ client
     console.log(err.message);
   });
 
-router.use(
-  session({
-    store: new RedisStore({ client: client }),
-    // store:new RedisStore({ client: renderRedis}),
-    secret: "secret$%^134",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false, // if true only transmit cookie over https
-      httpOnly: false, // if true prevent client side JS from reading the cookie
-      sameSite: "none",
-      maxAge: 1000 * 60 * 10, // session max age in miliseconds
-    },
-  })
-);
 
 router.post("/", async function (req, res, next) {
   try {
@@ -40,10 +25,11 @@ router.post("/", async function (req, res, next) {
     } else if (loginCredentials === "Server Busy") {
       res.status(200).send("Server Busy");
     } else {
-      const sess = await req.session;
-      console.log(sess);
-      sess.username = email;
-      console.log(sess.username);
+      await client.set("key", loginCredentials.token);
+      const value = await client.get("key");
+      console.log(value);
+      // await client.disconnect();
+
       res.status(200).json({ token: loginCredentials.token });
     }
   } catch (error) {
