@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const config = require("../config/api.js");
 
 async function InsertSignUpUser(token) {
   try {
@@ -25,7 +24,7 @@ async function InsertSignUpUser(token) {
   <h5>Welcome to the App</h5>
   <p>Your account has been successfully registered</p>
   <p>Click below link to login into your account.</p>
-  <a href="${config.apiUrl}/login">click here</a>
+  <a href="${process.env.apiUrl}/login">click here</a>
   <p>Regards,</p>
   <p>App</p>
   `;
@@ -39,7 +38,7 @@ async function InsertSignUpUser(token) {
           <h1>Registration Successful</h1>
           <p>Your account has been successfully registered.</p>
           <p>Click below link to login into your account.</p>
-          <a href="${config.apiUrl}/login">Click here</a>
+          <a href="${process.env.apiUrl}/login">Click here</a>
       </html>`;
     }
     return `<html>
